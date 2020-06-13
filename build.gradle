@@ -1,0 +1,79 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'com.google.protobuf' version '0.8.12'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://www.dukascopy.com/client/jforexlib/publicrepo"
+    }
+}
+
+ext {
+    grpcVersion = '1.29.0'
+}
+
+dependencies {
+    compile "com.dukascopy.api:JForex-API:2.13.88"
+    compile("com.dukascopy.dds2:DDS2-jClient-JForex:3.6.14") {
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+    }
+    implementation "com.google.inject:guice:4.2.3"
+    implementation "com.google.inject.extensions:guice-servlet:4.2.3"
+    implementation "io.grpc:grpc-netty:$grpcVersion"
+    implementation "io.grpc:grpc-protobuf:$grpcVersion"
+    implementation "io.grpc:grpc-stub:$grpcVersion"
+    implementation "io.netty:netty-transport-native-epoll:4.1.50.Final:linux-x86_64"
+    implementation "io.netty:netty-transport-native-kqueue:4.1.50.Final:osx-x86_64"
+    compileOnly "org.apache.tomcat:tomcat-annotations-api:9.0.35" // necessary for Java 9+
+    compileOnly "jakarta.servlet:jakarta.servlet-api:4.0.3"
+    runtimeOnly "io.prometheus:simpleclient_servlet:0.9.0"
+    runtimeOnly "io.prometheus:simpleclient_logback:0.9.0"
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    testImplementation "org.eclipse.jetty:jetty-webapp:9.4.29.v20200521"
+    testImplementation "org.mockito:mockito-core:3.3.3"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.2"
+}
+
+configurations.all {
+    resolutionStrategy {
+        // JForex requires version 19.0 (Futures#dereference), while netty requires newer.
+        force 'com.google.guava:guava:23.6-jre' // 23.6-jre meets both requirements.
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.12.3"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+sourceSets {
+    main.java.srcDirs += "build/generated/source/proto/main/grpc"
+    main.java.srcDirs += "build/generated/source/proto/main/java"
+}
+
+group "com.after_sunrise.dukascopy"
+version "0.0.1-SNAPSHOT"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+test {
+    useJUnitPlatform()
+}

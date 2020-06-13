@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package com.after_sunrise.dukascopy.grpc.proto;
+
+option java_outer_classname = "DukascopyProto";
+
+message StatusRequest {
+}
+
+message StatusResponse {
+    string version = 1;
+    sint64 system_time = 2;
+    sint64 server_time = 3;
+    bool connected = 11;
+    string account = 12;
+    repeated string symbols = 21;
+}
+
+message TickRequest {
+    repeated string symbols = 1;
+}
+
+message TickResponse {
+    string symbol = 1;
+    sint64 time = 2;
+    double ask_price = 11;
+    double ask_size = 12;
+    double bid_price = 21;
+    double bid_size = 22;
+}
+
+service DukascopyEndpoint {
+
+    rpc status (StatusRequest) returns (StatusResponse);
+
+    rpc subscribe (TickRequest) returns (stream TickResponse);
+
+}

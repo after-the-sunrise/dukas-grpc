@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+    <display-name>dukascopy-grpc</display-name>
+
+    <servlet>
+        <servlet-name>metrics</servlet-name>
+        <servlet-class>io.prometheus.client.exporter.MetricsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>metrics</servlet-name>
+        <url-pattern>/metrics</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>logback</servlet-name>
+        <servlet-class>ch.qos.logback.classic.ViewStatusMessagesServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>logback</servlet-name>
+        <url-pattern>/logback</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>guice</filter-name>
+        <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>guice</filter-name>
+        <url-pattern>/</url-pattern>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>com.after_sunrise.dukascopy.grpc.Listener</listener-class>
+    </listener>
+
+</web-app>
