@@ -15,7 +15,7 @@ deploy:
   provider: releases
   api_key:
     secure: pMs3v0DuFSpWjPoq7gH/bdSW2brd//MpXJk5MM7x7xBZH6DGPSvwymcIyqlaz1OFX3X8tEpxQ2D/REtA+CUuaQzq0Xg1knmlWIwgMcMTiyzal0VC/2LLdiE1vP4lix9Z9qVGt45BkGcBdsykMbX58z2QWkbTBAUTqoUj8o8Mapn8bVJbUUCQV/mRSd8dWti1ep/NeKsnzRTu33FFdCtTmLZI0xgxKx6EPDBwrPRcgyE2SrUvj1BBB/Fp0vfZZWkr4+USwqwkK2RcQP3uxILMoDAFAPYhDC4qTvxeDWwPVI4QmY5+579RC/IQ3mDbz9/HAnuNgIUYk1kvlOK/xSQUz1XFaUemq9CqI3pI4JaxwIi+sT+S4V5yV1G8FVNqrJaSZ0Ctw4vnq/0wxp+RvSLxetT2eJJ8pcQENAMBVVDc32FBfB4E43dIAxg1uoxbkQ4tjiVrD/BM/s9MV0f+jb7uY8Zi1AmuYRjV18uaNWGVqKZrhmVsbs82fti90Kka0W8IqLoW79Qa1eFAyYMh4XDfCYzD4ITuby6h2NrN5L+oA8m200ceaa1KjHZ6GBIcquaolZLr7ABpoybxzyj91/sIzBZomiBTg2y95jEnEs46pT+RLPHgF7gmpLBwpPYZTFWFjekIFVwGi7UUqHLfXijZk9Y/5RK240WX+NdP880dboY=
-  file: build/libs/dukas-gprc-*.war
+  file: build/libs/dukas-grpc-*.war
   file_glob: true
   skip_cleanup: true
   overwrite: true
